@@ -1,0 +1,115 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="LabAssignment1.Site1" %>
+
+<!DOCTYPE html>
+<script runat="server">
+
+  public static int count = 0;
+  void Application_Start(object sender, EventArgs e) 
+  {
+    Application["myCount"] = count;
+  }
+
+  void Session_Start(object sender, EventArgs e) 
+  {
+    count = Convert.ToInt32(Application["myCount"]);
+    Application["myCount"] = count + 1;
+  }
+
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+   
+</head>
+<body>
+
+    <form id="form1" runat="server">
+        <div>
+            <asp:Label ID="Label4" runat="server"></asp:Label>
+        </div>
+
+        <div>
+            <img src="pictures/RecipeHomeSmallBanner.jpg" />
+            <br />
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="tab-content"><a href="default.aspx">Home page</a></li>
+                <li role="presentation" class="tab-content"><a href="add.aspx">Add a Recipe</a></li>
+                <li role="presentation" class="tab-content"><a href="search.aspx">Search Recipes</a></li>
+                <li role="presentation" class="tab-content"><a href="recipeView.aspx">View Your Recipes</a></li>
+                <li role="presentation" runat="server" id="loginHyperlink" class="tab-content"><a href="AdminAccessPage.aspx">Admin Access</a></li>
+               <li role="presentation" class="tab-content" ><a>Page visitors: 0</a></li>
+            </ul>
+
+            <!-- experiment -->
+
+             <asp:LoginView ID="LoginView1" runat="server">
+                <AnonymousTemplate>
+                    <%-- <asp:Menu Orientation="Horizontal" StaticMenuItemStyle-HorizontalPadding="50" StaticMenuItemStyle-CssClass="menuitems"  runat="server"> --%>
+                    <asp:Menu ID="navMenu" runat="server" 
+                     Orientation="Horizontal">
+                       <Items>
+                           <asp:MenuItem  Text="Home" NavigateUrl="Home.aspx">
+                           </asp:MenuItem>
+                           <asp:MenuItem Text="Search" NavigateUrl="Search.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="Add" NavigateUrl="Add Recepies.aspx"></asp:MenuItem>
+
+                       </Items>
+                    </asp:Menu>
+                    <asp:LoginStatus ID="LoginStatus1"  CssClass="LoginName" runat="server" />
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                     
+                    <asp:Menu ID="navMenu" runat="server" 
+                     Orientation="Horizontal">
+                       <Items>
+                           <asp:MenuItem  Text="Home" NavigateUrl="default.aspx">
+                           </asp:MenuItem>
+                           <asp:MenuItem Text="Search" NavigateUrl="search.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="Add recepies" NavigateUrl="add.aspx"></asp:MenuItem>
+                       </Items>
+                    </asp:Menu>
+                    <asp:LoginStatus CssClass="LoginName" ID="LoginStatus1" runat="server" />                      
+                      <asp:LoginName  CssClass="LoginName" ID="LoginName1" runat="server" FormatString="Hello, {0}!" />
+                </LoggedInTemplate>
+
+                           <RoleGroups>
+                    <asp:RoleGroup Roles="Administrator">
+                        <ContentTemplate>
+                               <asp:Menu ID="navMenu" runat="server" 
+                 Orientation="Horizontal">
+                       <Items>
+                           <asp:MenuItem  Text="Adminstrator" NavigateUrl="adminstrator.aspx">
+                           </asp:MenuItem>
+                           <asp:MenuItem Text="HOME" NavigateUrl="default.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="SEARCH" NavigateUrl="search.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="ADD" NavigateUrl="add.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="Admistrator" NavigateUrl="adminstrator.aspx"></asp:MenuItem>
+
+                       </Items>
+                    </asp:Menu>
+                    <asp:LoginStatus ID="LoginStatus1"  CssClass="LoginName" runat="server" />
+            
+                         
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+
+                </asp:LoginView>
+
+
+          
+            <br />
+      
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+    </form>
+</body>
+
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+</html>
+
